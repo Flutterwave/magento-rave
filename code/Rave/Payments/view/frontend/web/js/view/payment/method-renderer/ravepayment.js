@@ -56,7 +56,7 @@ define(
             rave_country = 'NG';
             break;
         }
-        
+
         return {
           amount: this.getQuoteAmount(),
           currency: this.getQuoteCurrency(),
@@ -73,30 +73,16 @@ define(
 
       /** Place Order action */
       makePayment: function () {
-        var test = this.getRaveConfigValue('test_mode');
-        test = (parseInt(test) == 1) ? true : false;
+        var script = document.createElement('script');
+        script.src = '//api.ravepay.co/flwv3-pug/getpaidx/api/flwpbf-inline.js';
+        script.src_type = 'url';
+
+        document.getElementsByTagName('head')[0].appendChild(script);
+        var _this = this;
+        setTimeout(function () {
+          getpaidSetup(_this.buildConfig());
+        }, 2000);
         
-        if (test) {
-          var script = document.createElement('script');
-          script.src = '//ravesandboxapi.flutterwave.com/flwv3-pug/getpaidx/api/flwpbf-inline.js';
-          script.src_type = 'url';
-
-          document.getElementsByTagName('head')[0].appendChild(script);
-          var _this = this;
-          setTimeout(function () {
-            getpaidSetup(_this.buildConfig());
-          },2000);
-        } else {  
-          var script = document.createElement('script');
-          script.src = '//api.ravepay.co/flwv3-pug/getpaidx/api/flwpbf-inline.js';
-          script.src_type = 'url';
-
-          document.getElementsByTagName('head')[0].appendChild(script);
-          var _this = this;
-          setTimeout(function () {
-            getpaidSetup(_this.buildConfig());
-          },2000);
-        }
       },
 
       setErrorMessage: function (message) {
